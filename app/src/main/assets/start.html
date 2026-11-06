@@ -1,0 +1,32 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>APPF Referee Lights</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:#000;color:#fff;font-family:system-ui,-apple-system,Roboto,sans-serif;overflow:hidden}
+#box{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:24px}
+.badge{width:110px;height:110px;border-radius:50%;border:3px solid #d4af37;display:flex;align-items:center;justify-content:center;
+ font-weight:900;font-size:30px;letter-spacing:2px;color:#d4af37;box-shadow:0 0 30px rgba(212,175,55,.35) inset,0 0 20px rgba(212,175,55,.2)}
+.fed{font-size:12px;letter-spacing:3px;text-align:center;color:#d4af37;max-width:300px;line-height:1.6}
+#pin{width:240px;font-size:34px;text-align:center;letter-spacing:12px;padding:14px;border-radius:14px;border:2px solid #333;background:#111;color:#fff;outline:none}
+#pin:focus{border-color:#d4af37}
+#go{width:240px;padding:16px;border:0;border-radius:14px;background:#d4af37;color:#000;font-size:20px;font-weight:800;letter-spacing:2px}
+#err{min-height:18px;color:#ff4d4d;font-size:14px;text-align:center}
+</style></head><body>
+<div id="box">
+  <div class="badge">APPF</div>
+  <div class="fed">AMATEUR POWER &amp; PHYSIQUE FEDERATION</div>
+  <input id="pin" type="password" inputmode="numeric" autocomplete="off" maxlength="4" placeholder="••••">
+  <button id="go">ENTER</button>
+  <div id="err"></div>
+</div>
+<script>
+var pin=document.getElementById('pin'),err=document.getElementById('err');
+if(location.hash.length>1){try{err.textContent=decodeURIComponent(location.hash.slice(1))}catch(e){}}
+function go(){var p=pin.value.trim();if(!p)return;
+  var e='';try{e=window.Android?Android.enter(p):'App bridge missing'}catch(x){e='Error'}
+  if(e){err.textContent=e;pin.value=''}}
+document.getElementById('go').onclick=go;
+pin.onkeydown=function(e){if(e.key==='Enter')go()};
+pin.oninput=function(){err.textContent=''};
+</script></body></html>
